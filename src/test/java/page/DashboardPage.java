@@ -1,34 +1,32 @@
 package page;
-
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
 import data.DataHelper;
 import lombok.val;
+
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
+    private ElementsCollection cards = $$(".list__item");
+    final String balanceStart = "баланс: ";
+    final String balanceFinish = " р.";
+
     public DashboardPage() {
-        $("[data-test-id=dashboard]").shouldBe(Condition.visible);
-        $$(".list__item");
-        final String balanceStart = "баланс: ";
-        final String balanceFinish = " р.";
+    }
 
-        public int getFirstCardBalance() {
-            val text = DataHelper.getFirstCard().text();
-            return extractBalance(text);
-        }
-        public int getSecondCardBalance() {
-            val text = DataHelper.getSecondCard().text();
-            return extractBalance(text);
-        }
+    public int getCardBalance(String id) {
+        String text;
+        text = String.valueOf(cards.filterBy(Condition.text(id)));
+        return extractBalance(text);
+    }
 
-        private int extractBalance(String text){
-            val start = text.indexOf(balanceStart);
-            val finish = text.indexOf(balanceFinish);
-            val value = text.substring(start + balanceStart.length(), finish);
-            return Integer.parseInt(value);
-        }
+    private int extractBalance(String text) {
+        val start = text.indexOf(balanceStart);
+        val finish = text.indexOf(balanceFinish);
+        val value = text.substring(start + balanceStart.length(), finish);
+        return Integer.parseInt(value);
     }
 
     public DashboardPage TopUpFirstCard(DataHelper.SecondCard secondCard) {
