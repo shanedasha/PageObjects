@@ -17,8 +17,7 @@ public class DashboardPage {
     }
 
     public int getCardBalance(String id) {
-        String text;
-        text = String.valueOf(cards.filterBy(Condition.text(id)));
+        val text = $("[data-test-id='" + id + "'").getText();
         return extractBalance(text);
     }
 
@@ -28,22 +27,8 @@ public class DashboardPage {
         val value = text.substring(start + balanceStart.length(), finish);
         return Integer.parseInt(value);
     }
-
-    public DashboardPage TopUpFirstCard(DataHelper.SecondCard secondCard) {
-        $("[data-test-id=92df3f1c-a033-48e6-8390-206f6b1f56c0]").shouldBe(Condition.visible);
-        $("[data-test-id=action-deposit]").click();
-        $("[data-test-id=amount]").setValue("120");
-        $("[data-test-id=from]").setValue(DataHelper.getSecondCard().getNumber());
-        $("[data-test-id=action-transfer]").click();
-        return new DashboardPage();
-    }
-
-    public DashboardPage TopUpSecondCard() {
-        $("[data-test-id=0f3f5c2a-249e-4c3d-8287-09f7a039391d]").shouldBe(Condition.visible);
-        $("[data-test-id=action-deposit]").click();
-        $("[data-test-id=amount]").setValue("120");
-        $("[data-test-id=from]").setValue(DataHelper.getFirstCard().getNumber());
-        $("[data-test-id=action-transfer]").click();
-        return new DashboardPage();
+    public MoneyTransferPage topUpCard(String id) {
+        $("[data-test-id='" + id + "'").find("button").click();
+        return new MoneyTransferPage();
     }
 }

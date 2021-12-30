@@ -24,26 +24,16 @@ public class DataHelper {
     public static VerificationCode getVerificationCode() {
         return new VerificationCode("12345");
     }
-
     @Value
-    public static class FirsCard {
-        private String number;
-        private String balance;
-        private String id;
+    public static class CardInfo {
+        String number;
+        String id;
+    }
+    public static CardInfo getFirstCard() {
+        return new CardInfo("5559 0000 0000 0001", "92df3f1c-a033-48e6-8390-206f6b1f56c0");
     }
 
-    public static FirsCard getFirstCard() {
-        return new FirsCard("5559 0000 0000 0001", "10 000 RUB","92df3f1c-a033-48e6-8390-206f6b1f56c0");
-    }
-
-    @Value
-    public static class SecondCard {
-        private String number;
-        private String balance;
-        private String id;
-    }
-
-    public static SecondCard getSecondCard() {
-        return new SecondCard("5559 0000 0000 0002", "10 000 RUB","0f3f5c2a-249e-4c3d-8287-09f7a039391d");
+    public static CardInfo getSecondCard() {
+        return new CardInfo("5559 0000 0000 0002", "0f3f5c2a-249e-4c3d-8287-09f7a039391d");
     }
 }
